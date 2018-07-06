@@ -62,8 +62,8 @@
                     <Input v-model="formValidate.address" placeholder="输入完整的收货地址"></Input>
                 </FormItem>
 		        <FormItem>
-		            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-		            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+		            <Button :loading="loading" type="primary" @click="handleSubmit('formValidate')">提交</Button>
+		            <!-- <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
 		        </FormItem>
 		    </Form>
 		</div>
@@ -71,7 +71,7 @@
          <Modal
             v-model="modal6"
             title="注册成功"
-            :loading="loading"
+            
             @on-ok="asyncOK">
             <p>注册代理成功，代理帐号为：<span style="font-size:25pt;color:red">{{newUserAccountNumber}}</span></p>
         </Modal>
@@ -98,7 +98,7 @@ import Cookies from 'js-cookie';
                 },
                 showPosition:false,
                 modal6: false,
-                loading: true,
+                loading: false,
                 newUserAccountNumber:'',
                 agentType:[],
                 ruleValidate: {
@@ -143,7 +143,7 @@ import Cookies from 'js-cookie';
                 this.$refs[name].validate((valid) => {
                     if (valid) {
 
-
+                        this.loading =true;
                         this.$http.post("/user/register",this.formValidate).then(response=> {
                       
                                   var data = response.data;
@@ -154,18 +154,18 @@ import Cookies from 'js-cookie';
                                       this.newUserAccountNumber=data.result.accountNumber;
                                       this.modal6=true;
                                   }else{
-                                    this.$Message.error('Fail!');
+                                    // this.$Message.error('Fail!');
                                   }
-                                  this.btnloading = false;
-
+                                  this.loading = false;
+                                // this.$refs[name].resetFields();//重置表单
                             }).catch(function (error) {
                               //接口失败，也就是state不是200的时候，走这里
-                              this.$Message.error('Fail!');
+                              // this.$Message.error('error!');
                             });
 
                         
                     } else {
-                        this.$Message.error('Fail!');
+                        this.$Message.error('不能有空!');
                     }
                 })
             },
@@ -179,6 +179,7 @@ import Cookies from 'js-cookie';
             findAgentType(){
                 this.$http.get("/agentType/findPage?pageIndex=0&pageSize=100000").then(response=> {
                       var data = response.data;
+                      // console.log(data)
                       this.agentType=data.result.result;
                 })
             },

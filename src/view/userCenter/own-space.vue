@@ -46,16 +46,12 @@
                         <span>{{ userForm.userName }}</span>
                     </FormItem>
                     <FormItem label="性别：">
-                        <span>{{ userForm.userSex }}</span>
-                          <RadioGroup :value="userForm.userSex" @on-change="handleSwitchSex" >
-                            <Radio label="1">
-                                <span>男</span>
-                            </Radio>
-                            <Radio label="0">
-                                <span>女</span>
-                            </Radio>
-
-                        </RadioGroup>
+                        <span v-if="userForm.userSex==1"> 男</span>
+                        <span v-else> 女</span>
+                        <!--  <Select v-model="userForm.userSex" style="width:200px">
+                            <Option  value="1" >男</Option>
+                            <Option  value="0" >女</Option>
+                        </Select> -->
                     </FormItem>
                     <FormItem label="身份证：">
                         <span>{{ userForm.identityCard }}</span>
@@ -107,7 +103,7 @@
                         <Button type="primary" size="small" @click="showEditPassword">修改密码</Button>
                     </FormItem>
                     <div>
-                        <Button type="text" style="width: 100px;" @click="cancelEditUserInfor">取消</Button>
+                        <!-- <Button type="text" style="width: 100px;" @click="cancelEditUserInfor">取消</Button> -->
                         <Button type="primary" style="width: 100px;" :loading="save_loading" @click="saveEdit">保存</Button>
                     </div>
                 </Form>

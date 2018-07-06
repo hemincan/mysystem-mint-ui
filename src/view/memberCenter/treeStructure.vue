@@ -3,11 +3,12 @@
             <p slot="title">
                 <Icon type="person"></Icon>
                 代理安置结构
+
             </p>
             <div style="overflow:hidden;padding:20px;width:600px;">
                <OrgChart :data="testData" v-on:onDrop="onDrop" @onClick="nodeClick"></OrgChart>
             </div>
-
+              <Button type="primary" @click="back">返回最上层</Button>
   </Card>
 </template>
 
@@ -20,6 +21,7 @@
     },
     data() {
       return {
+         preAccount:'',
         testData: [
           {
             id: 1,
@@ -63,19 +65,24 @@
       }
     },
     mounted(){
-      console.log(Cookies.get("account"))
+      // console.log(Cookies.get("account"))
       this.init(Cookies.get("account"));
+      this.preAccount = Cookies.get("account");
     },
     methods: {
        init(account) {
+            this.$Spin.show();
              this.$http.get("/agentTree/treeStructure?account="+ account).then(response=> {
                     var data = response.data;
                     this.testData = new Array();
                     this.testData.push(data.result);
                     
-                
+                     this.$Spin.hide();
                     
               })
+      },
+       back(){
+          this.init(this.preAccount);
       },
      nodeClick(node){
         // alert(JSON.stringify(node))

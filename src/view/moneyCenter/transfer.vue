@@ -3,32 +3,32 @@
 	<Card>
             <p slot="title">
                 <Icon type="person"></Icon>
-                申请提现
+                转帐
             </p>
             <div style="width:80vw">
           
            
 		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
               
-		        <FormItem label="提现金额：" prop="withdrawMoney">
-		            <Input v-model="formValidate.withdrawMoney" placeholder="Enter your name"></Input>
-                <div>可提现的余额为：{{userData.balance}}元</div>
+		        <FormItem label="转帐金额：" prop="amount">
+		            <Input v-model="formValidate.amount" placeholder="Enter your name"></Input>
+                <div>可转帐的余额为：{{userData.balance}}元</div>
 		        </FormItem>
                
-                <FormItem label="银行名：" prop="bankName">
-                    <Input v-model="formValidate.bankName" placeholder="请输入银行卡帐号的银行名"></Input>
+                <FormItem label="对方帐号：" prop="toUserAccount">
+                    <Input v-model="formValidate.toUserAccount" placeholder="对方帐号"></Input>
                 </FormItem>
                 
-                <!--  <FormItem label="银行地址：" prop="bankAddress">
-                    <Input v-model="formValidate.bankAddress" placeholder="Enter your e-mail"></Input>
-                </FormItem> -->
+                 <FormItem label="备注：" prop="mark">
+                    <Input v-model="formValidate.mark" placeholder="请输入备注"></Input>
+                </FormItem>
 
-                 <FormItem label="银行卡号：" prop="bankCard">
+                <!--  <FormItem label="银行卡号：" prop="bankCard">
                     <Input v-model="formValidate.bankCard" placeholder="请输入银行卡号"></Input>
                 </FormItem>
                     <FormItem label="户名：" prop="bankUserName">
                     <Input v-model="formValidate.bankUserName" placeholder="银行卡户名"></Input>
-                </FormItem>
+                </FormItem> -->
                 <FormItem label="验证码：" prop="identifyCode">
                     <Input  v-model="identifyCodeInput" placeholder="验证码">
                         <!-- <div  slot="prepend">验证码</div> -->
@@ -41,7 +41,7 @@
                      <div style="color:red">{{errorMessage}}</div>
                 </FormItem>
 		        <FormItem>
-		            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+		            <Button type="primary" :loading="submitBtnLoading" @click="handleSubmit('formValidate')">提交</Button>
 		            <!-- <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
 		        </FormItem>
 		    </Form>
@@ -49,21 +49,21 @@
         
          <Modal
             v-model="modal6"
-            title="提现提交成功"
+            title="转帐已经成功"
             :loading="loading"
             @on-ok="asyncOK">
-            <p>提现提交成功，请耐心等待处理</p>
+            <p>转帐已经成功</p>
         </Modal>
         <Modal
           v-model="confimInfo"
           title="确认你的信息"
           :loading="confimInfoLoading"
           @on-ok="confimInfoAsyncOK">
-          <p style="color:red;font-size:15pt;">请确认你的信息无误，这将影响到你的金钱能否成功转入你的银行帐户中</p>
-          <div>提现金额：{{formValidate.withdrawMoney}}</div>
-          <div>银行名： {{formValidate.bankName}}</div>
-          <div>银行卡号： {{formValidate.bankCard}}</div>
-          <div>银行户名： {{formValidate.bankUserName}}</div>
+         <!--  <p style="color:red;font-size:15pt;">请确认你的信息无误，点击确认进行转帐</p> -->
+          <div>转帐金额：{{formValidate.amount}}</div>
+          <div>转入帐户： {{formValidate.toUserAccount}}</div>
+          <div style="color:red;font-size:15pt;">转入用户名： {{toUserName}}</div>
+          <div>确认信息无误请点确认提交</div>
       </Modal>
 	</Card>
 </template>
@@ -79,8 +79,6 @@ import Cookies from 'js-cookie';
                
                 if (!Number.isInteger(+value)) {
                     callback(new Error('请输入数字值'));
-                }else if(value<100){
-                    callback(new Error('提现金额要100以上'));
                 } else {
                     callback();
                 }
@@ -91,9 +89,9 @@ import Cookies from 'js-cookie';
                 identifyCodeInput:'',
                 errorMessage:'',
                 formValidate: {
-                    withdrawMoney:0,
-                    bankName:'',
-                    bankAddress:'',
+                    amount:0,
+                    toUserAccount:'',
+                    mark:'',
                     bankCard:'',
                     bankUserName:''
                 },
@@ -104,16 +102,18 @@ import Cookies from 'js-cookie';
                 confimInfo:false,
                 confimInfoLoading:false,
                 ///
+                toUserName:"",
+                submitBtnLoading:false,
                 ruleValidate: {
                    
-                    withdrawMoney: [
+                    amount: [
                            {required: true, message: '金额不能为空', trigger: 'blur'},
                            {validator: validateMoney, trigger: 'blur'}
                     ],
-                    bankName: [
+                    toUserAccount: [
                         { required: true, message: '不能为空', trigger: 'blur' }
                     ],
-                     bankAddress: [
+                     mark: [
                         { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                      bankCard: [
@@ -133,9 +133,10 @@ import Cookies from 'js-cookie';
         },
         methods: {
             handleSubmit (name,confim) {
-
+              
               this.$refs[name].validate((valid) => {
                   if (valid) {
+                    this.submitBtnLoading=true;
                        this.errorMessage="";
                       if(this.identifyCodeInput!=this.identifyCode){
                            this.errorMessage="请输入正确的验证码";
@@ -143,31 +144,16 @@ import Cookies from 'js-cookie';
                       }
                       
                       if(confim==null){
-                        this.confimInfo = true;
+                        this.getToUserInfo();
+                       
+
                         return;
                       }
                       this.identifyCodeInput='';
                       this.refreshCode();
                       
-
-
-                      this.$http.post("/withdraw/save",this.formValidate).then(response=> {
-                    
-                                var data = response.data;
-                                if(data.code == 0) {
-                                  this.modal6=true;
-                                    this.$Notice.success({
-                                          title: "提现申请成功"
-                                      });
-                                }else{
-                                  this.$Message.error('不能有空!');
-                                }
-                                this.btnloading = false;
-
-                          }).catch(function (error) {
-                            //接口失败，也就是state不是200的时候，走这里
-                            // this.$Message.error('Fail!');
-                          });
+                      this.saveTransfer();
+                     
 
                       
                   } else {
@@ -175,12 +161,39 @@ import Cookies from 'js-cookie';
                   }
               })
             },
+            getToUserInfo(){
+
+                 this.$http.post("/user/getUserName?userAccount="+this.formValidate.toUserAccount).then(response=> {
+                      this.toUserName = response.data.result;
+                      this.submitBtnLoading=false;
+                       this.confimInfo = true;
+                  });
+            },
+            saveTransfer(){
+                 this.$http.post("/transfer/save",this.formValidate).then(response=> {
+                    
+                                var data = response.data;
+                                if(data.code == 0) {
+                                  this.modal6=true;
+                                    this.$Notice.success({
+                                          title: "转帐成功"
+                                      });
+                                }else{
+                                  this.$Message.error('不能有空!');
+                                }
+                                this.submitBtnLoading = false;
+
+                          }).catch(function (error) {
+                            //接口失败，也就是state不是200的时候，走这里
+                            // this.$Message.error('Fail!');
+                          });
+            },
             handleReset (name) {
                 this.$refs[name].resetFields();
             },
             confimInfoAsyncOK(){
                this.handleSubmit ('formValidate',true)
-               this.userData.balance = this.userData.balance - this.formValidate.withdrawMoney;
+               this.userData.balance = this.userData.balance - this.formValidate.amount;
             },
             asyncOK () {
                 this.modal6 = false;
@@ -191,11 +204,7 @@ import Cookies from 'js-cookie';
                           var data = response.data;
                           if(data.code == 0) {
                                 this.userData = data.result;
-                                this.formValidate.bankAddress = this.userData.bankAddress;
-                                this.formValidate.bankCard =this.userData.bankCard;
-                                 this.formValidate.bankUserName= this.userData.bankUserName;
-                                 this.formValidate.bankName= this.userData.bankName;
-                                 this.formValidate.bankUserName = this.userData.userName
+                                
                           }else{
                               
                           }

@@ -37,6 +37,17 @@ service.interceptors.request.use(config => {
 // response拦截器
 service.interceptors.response.use(
     response => {
+        // console.log(response)
+        if(response.data.code==1000){
+            //无权限或者没有登录的时候
+            window.vue.$router.push({path: "/login"});
+        }
+        if(response.data.code==0){
+            // window.vue.$Message.success(response.data.message);
+        }
+        if(response.data.code!=0){
+            window.vue.$Message.error(response.data.message);
+        }
         return response;
         // let res = response.data;
         // if (res.code == 0) {

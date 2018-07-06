@@ -16,7 +16,8 @@
                 columns7: [
                  {
                         title: '获得时间',
-                        key: 'obtainDate'
+                        key: 'obtainDate',
+                        width:110
                     },
                  {
                         title: '奖金类型',
@@ -27,13 +28,28 @@
                         key: 'money'
                     },
                     {
-                        title: '代理人',
-                        key: 'agentName'
-                    },
-                    {
-                        title: '代理帐号',
-                        key: 'agentAccount'
-                    }
+                        title: '操作',
+                        key: 'action',
+                        width: 80,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, '查看')])
+                            }
+                        }
 
                 ],
                 data6: [
@@ -66,9 +82,13 @@
                 this.findPage();
             },
             show (index) {
+                var content = `编号：${this.data6[index].id}<br>获得日期：${this.data6[index].obtainDate}<br>奖金类型：${this.data6[index].bonusType}<br>金额：${this.data6[index].money}元<br>对碰积分：${this.data6[index].collisionIntegral}<br>对碰比例：${this.data6[index].collisionRatio}<br>封顶奖励：${this.data6[index].collisionTop}`;
+                if(this.data6[index].bonusType=='代理申单奖金'){
+                    content = `编号：${this.data6[index].id}<br>获得日期：${this.data6[index].obtainDate}<br>奖金类型：${this.data6[index].bonusType}<br>金额：${this.data6[index].money}元<br>代理姓名：${this.data6[index].agentName}<br>代理帐号：${this.data6[index].agentAccount}`;
+                }
                 this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+                    title: '详细信息',
+                    content: content
                 })
             },
             remove (index) {

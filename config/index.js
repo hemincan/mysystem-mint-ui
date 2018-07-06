@@ -49,7 +49,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/app/',
+    assetsPublicPath: '/app/',//这里加上了自己的后缀名
 
     /**
      * Source Maps

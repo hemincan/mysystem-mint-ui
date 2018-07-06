@@ -12,11 +12,16 @@ import applyWithdraw from  '@/view/moneyCenter/applyWithdraw'
 import bonus from  '@/view/moneyCenter/bonus'
 import integral from  '@/view/moneyCenter/integral'
 import withdraw from  '@/view/moneyCenter/withdraw'
+import transfer from  '@/view/moneyCenter/transfer'
+import transferList from  '@/view/moneyCenter/transferList'
+
 
 import apply from  '@/view/applyGoods/apply'
 import userApplyList from  '@/view/applyGoods/userApplyList'
 
 import ownspace from  '@/view/userCenter/own-space'
+import alertPassword from  '@/view/userCenter/alertPassword'
+import messageDetail from  '@/view/userCenter/messageDetail'
 
 import identfyTest from  '@/view/identifyCode/identfyTest'
 
@@ -58,7 +63,16 @@ export default new Router({
             name: 'ownspace',
             component: ownspace
           },
-
+            {
+            path: '/userCenter/alertPassword',
+            name: 'alertPassword',
+            component: alertPassword
+          },
+           {
+            path: '/userCenter/messageDetail',
+            name: 'messageDetail',
+            component: messageDetail
+          },
 
           {
             path: '/memberCenter/addAgent',
@@ -97,7 +111,16 @@ export default new Router({
             name: 'withdraw',
             component: withdraw
           },
-
+           {
+            path: '/moneyCenter/transfer',
+            name: 'transfer',
+            component: transfer
+          },
+           {
+            path: '/moneyCenter/transferList',
+            name: 'transferList',
+            component: transferList
+          },
 
           {
             path: '/applyGoods/apply',

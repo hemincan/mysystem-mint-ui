@@ -41,9 +41,10 @@ router.beforeEach((to, from, next) => {
   // NProgress.done();
 });
 /* eslint-disable no-new */
-new Vue({
+var v = new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
 })
+window.vue = v;

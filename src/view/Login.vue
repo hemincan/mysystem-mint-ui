@@ -1,5 +1,5 @@
 <template>
-   <div style="width:70vw;margin:20vh auto;">
+   <div style="width:80vw;margin:0 auto;padding-top:20vh">
    		  <Card :bordered="false">
                 <p slot="title">欢迎使用</p>
               
@@ -18,7 +18,7 @@
                     <Input  v-model="identifyCodeInput" placeholder="验证码">
                         <!-- <div  slot="prepend">验证码</div> -->
                    
-                    <div class="code" @click="refreshCode" slot="append"  >
+                    <div @click="refreshCode" slot="append"  >
                             <s-identify :identifyCode="identifyCode"></s-identify>
                     </div>
                      </Input>
@@ -72,6 +72,7 @@ import SIdentify from './identifyCode/identify.vue'
                      this.errorMessage="请输入正确的验证码";
                     return;
                 }
+                this.refreshCode();
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         	this.logining=true;

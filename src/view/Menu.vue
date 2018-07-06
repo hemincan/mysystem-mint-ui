@@ -1,16 +1,18 @@
 <template>
 <div style="width:200px">
-<div style="height:10vh;font-size:30px;color:#fff">
-        logo
-    </div>
+        <div style="padding-top:0px;height:100px;font-size:23px;color:#fff;width:100%;font-weight:900;background:#2d8cf0">
+           <div style="position: absolute;left:16%;top:25px;"> 会员拓展系统 </div>
+           <img width="100%" src="../assets/bg.jpg">
+        </div>
          <Menu theme="dark" width="auto" :open-names="['1']" accordion @on-select="menuClick">
          <Submenu v-for="(item,index) in menuData" :name="index" :key="index">
              <template slot="title">
-              <Icon :type="item.icon"></Icon>
+              <Icon style="width:15px" :type="item.icon"></Icon>
                 {{item.name}}
             </template>
               <router-link   v-for="(c,index2) in item.children"  :key="index2" :to="c.path">
-                     <MenuItem    :name="index + '-' + index2">{{c.name}}</MenuItem>
+                     <MenuItem    :name="index + '-' + index2">
+                            <Icon v-if="c.icon!=null" style="width:15px" :type="c.icon"></Icon>{{c.name}}</MenuItem>
             </router-link>
          </Submenu>
 
@@ -71,7 +73,9 @@
                 <MenuItem name="4-2">重新登录</MenuItem>
             </router-link>
         </Submenu> -->
+
     </Menu>
+    <!-- <div style="background:#fff;position:absolute;bottom:10px;left:20%;">sdfdsafsd</div> -->
     </div>
 </template>
 <script>
@@ -85,15 +89,18 @@
                         children:[
                             {
                                 name:'添加代理',
-                                path:"/memberCenter/addAgent"
+                                path:"/memberCenter/addAgent",
+                                icon:"plus"
                             },
                             {
                                 name:'推荐结构',
-                                path:"/memberCenter/recommendedStructure"
+                                path:"/memberCenter/recommendedStructure",
+                                icon:"usb"
                             },
                             {
                                 name:'安置结构',
-                                path:"/memberCenter/treeStructure"
+                                path:"/memberCenter/treeStructure",
+                                icon:"network"
                             }
                         ]
                     },
@@ -103,20 +110,35 @@
                         children:[
                             {
                                 path:"/moneyCenter/applyWithdraw",
-                                name:"申请提现"
+                                name:"申请提现",
+                                icon:'android-create'
                             },
                              {
                                 path:"/moneyCenter/bonus",
-                                name:"奖金记录"
+                                name:"奖金记录",
+                                icon:'social-yen'
                             },
                              {
                                 path:"/moneyCenter/integral",
-                                name:"积分记录"
+                                name:"积分记录",
+                                icon:'social-euro-outline'
                             },
                              {
                                 path:"/moneyCenter/withdraw",
-                                name:"提现记录"
-                            }
+                                name:"提现记录",
+                                icon:'android-list'
+
+                            },
+                            {
+                                path:"/moneyCenter/transfer",
+                                name:"转帐",
+                                icon:'shuffle'
+                            } ,
+                             {
+                                path: '/moneyCenter/transferList',
+                                name:"转帐记录",
+                                icon:'clipboard'
+                            } 
                         ]
                     },
                     {
@@ -125,11 +147,13 @@
                         children:[
                             {
                                 path:"/applyGoods/apply",
-                                name:"申请报单"
+                                name:"申请报单",
+                                icon:'android-create'
                             },
                              {
                                 path:"/applyGoods/userApplyList",
-                                name:"报单记录"
+                                name:"报单记录",
+                                icon:'clipboard'
                             } 
                         ]
                     },
@@ -139,15 +163,23 @@
                         children:[
                            {
                                 path:"/home",
-                                name:"回到首页"
+                                name:"回到首页",
+                                icon:'home'
                             },
                             {
                                 path:"/userCenter/ownspace",
-                                name:"我的资料"
+                                name:"我的资料",
+                                icon:'compose'
+                            },
+                            {
+                                path:"/userCenter/alertPassword",
+                                name:"修改密码",
+                                icon:'pound'
                             },
                              {
                                 path:"/login",
-                                name:"重新登录"
+                                name:"重新登录",
+                                icon:'android-exit'
                             } 
                         ]
                     }  
@@ -155,9 +187,11 @@
             }
         },
         methods:{
-            menuClick(){
-               
-                this.$emit('menuClick')
+            menuClick(s){
+                var ind = s.split("-");
+                var menu = this.menuData[ind[0]].children[ind[1]];
+                // console.log(menu)
+                this.$emit('menuClick',menu)
             }
         }
     }

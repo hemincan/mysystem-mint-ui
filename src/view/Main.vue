@@ -2,8 +2,7 @@
     <div id="main" class="app-main">
 
         <drawer
-          width="200px;"
-          :show.sync="drawerVisibility">
+          :show.sync="drawerVisibility" show-mode="push">
 
         <div slot="drawer" style="background:#495060;height:100vh">
             <mainmenu @menuClick="menuClick"></mainmenu>
@@ -18,13 +17,19 @@
           </div> -->
         </div>
 
-        <view-box ref="viewBox" :body-padding-top="isShowNav ? '46px' : '0'" body-padding-bottom="55px">
-               <mt-header  style="z-index:100;background:#495060" fixed title="欢迎使用系统 ">
-                    <mt-button  slot="left" @click="openMenu">菜单</mt-button>
-                  <mt-button icon="" slot="right"  @click="exitSystem">退出系统</mt-button>
+        <view-box ref="viewBox" :body-padding-top="isShowNav ? '46px' : '0'" body-padding-bottom="0px">
+               <mt-header  style="z-index:100;background:#495060;height:50px" fixed :title="currentMenu.name">
+                    <mt-button  slot="left" @click="openMenu">
+                        <Icon size="36" type="navicon-round" class="menuIcon"></Icon>
+                    </mt-button>
+                    <div slot="header">
+                        sss
+                    </div>
+                  <mt-button icon="" slot="right"  @click="exitSystem"><Icon size="36" type="home" class="menuIcon"></Icon></mt-button>
                 </mt-header>
                 <div style="padding:25px 5px 5px 5px;background:#f0f0f0;height:100vh;margin-top:-10px;">
                      <router-view/>
+                     <div style="height:200px;"></div>
                 </div>
                
           </view-box>
@@ -47,6 +52,7 @@
             return {
                 drawerVisibility:false,
                 isShowNav:true,
+                currentMenu:{},
                 sideMenusList:[
                     {
                         to:'/',
@@ -75,10 +81,11 @@
             },
             exitSystem(){
                 //向服务器请求退出
-                 this.$router.push({path:'/login'});
+                 this.currentMenu={};
+                 this.$router.push({path:'/home'});
             },
-            menuClick(){
-
+            menuClick(menu){
+                this.currentMenu=menu;
                 this.drawerVisibility=false;
             }
         }
@@ -98,5 +105,8 @@ html,body{
 .app-main{
     width: 100%;
     height: 100%;
+}
+.menuIcon:hover {
+    color: #2d8cf0;
 }
 </style>

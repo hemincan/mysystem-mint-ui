@@ -3,13 +3,13 @@
       <!--   <div style="margin:8px;text-align:left">
          <Button type="primary" @click="addSkip">添加</Button>
         </div> -->
-         <div style="margin:8px;text-align:left;width:300px;">
+      <!--    <div style="margin:8px;text-align:left;width:300px;">
                 输入用户帐号：<Input v-model="searchForm.userAccount" placeholder="输入用户帐号" >
                     
                       <Button slot="append" type="primary" @click="serach">搜索</Button>
                 </Input>
               
-        </div>
+        </div> -->
         <Table border :columns="columns7" :data="data6"></Table>
         <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page>
         <!-- {{pageData}} -->
@@ -33,18 +33,14 @@
               
                       {
                         title: '申请时间',
-                        key: 'applyDate'
+                        key: 'applyDate',
+                        width:110
                     },
-                        {
-                        title: '数量',
-                        key: 'goodsCount'
-                    },
+                       
                      {
                         title: '总价',
                         key: 'totalMoney'
                     },
-                  
-                  
                      {
                         title: '状态',
                         key: "state",
@@ -58,7 +54,30 @@
                             return h('div', {
                                 }, state);
                         }
-                    }
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        width: 80,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, '查看')])
+                            }
+                        }
                    
                 ],
                 data6: [
@@ -114,8 +133,18 @@
             },
             show (index) {
                 this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+                    title: '详细信息',
+                    content: `编号：${this.data6[index].id}
+                    <br>申请日期：${this.data6[index].applyDate}
+                    <br>类型：${this.data6[index].goodsType}
+                    <br>商品数量：${this.data6[index].goodsCount}
+                    <br>总价：${this.data6[index].totalMoney}
+                    <br>收货电话：${this.data6[index].receiverPhone}
+                    <br>收货人：${this.data6[index].receiverName}
+                    <br>收货地址：${this.data6[index].receiverAddress}
+                    <br>备注：${this.data6[index].remark}`
+
+
                 })
             },
             remove (index) {
