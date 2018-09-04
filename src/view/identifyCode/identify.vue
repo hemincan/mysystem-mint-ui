@@ -57,7 +57,7 @@
       },
       contentHeight: {
         type: Number,
-        default: 30
+        default: 35
       }
     },
     methods: {
@@ -112,7 +112,7 @@
       },
       drawDot (ctx) {
         // 绘制干扰点
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
           ctx.fillStyle = this.randomColor(0, 255)
           ctx.beginPath()
           ctx.arc(this.randomNum(0, this.contentWidth), this.randomNum(0, this.contentHeight), 1, 0, 2 * Math.PI)

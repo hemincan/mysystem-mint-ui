@@ -1,26 +1,26 @@
 <template>
 	<Card>
         <p slot="title">
-            <Icon type="person"></Icon>
+            <!-- <Icon type="person"></Icon> -->
             申请提现
         </p>
         <div style="width:90vw">
 	<div>
-		 <Form ref="editPasswordForm" :model="editPasswordForm" :label-width="60" label-position="right" :rules="passwordValidate">
+		 <Form ref="editPasswordForm" :model="editPasswordForm" :label-width="90" label-position="right" :rules="passwordValidate">
                 <FormItem label="原密码" prop="oldPass" :error="oldPassError">
-                    <Input v-model="editPasswordForm.oldPass" placeholder="请输入现在使用的密码" ></Input>
+                    <Input size="large" v-model="editPasswordForm.oldPass" placeholder="请输入现在使用的密码" ></Input>
                 </FormItem>
                 <FormItem label="新密码" prop="newPass">
-                    <Input v-model="editPasswordForm.newPass" placeholder="请输入新密码，至少6位字符" ></Input>
+                    <Input size="large" v-model="editPasswordForm.newPass" placeholder="请输入新密码，至少6位字符" ></Input>
                 </FormItem>
                 <FormItem label="确认新密码" prop="rePass">
-                    <Input v-model="editPasswordForm.rePass" placeholder="请再次输入新密码" ></Input>
+                    <Input size="large" v-model="editPasswordForm.rePass" placeholder="请再次输入新密码" ></Input>
                 </FormItem>
             </Form>
             <div style="color:red">{{passwordErrorMessage}}</div>
            
            <!--  <Button type="text" >取消</Button> -->
-            <Button type="primary" long :loading="savePassLoading" @click="saveEditPass">保存</Button>
+            <Button type="primary" size="large" long :loading="savePassLoading" @click="saveEditPass">保存</Button>
            
 	</div>
 	</div>

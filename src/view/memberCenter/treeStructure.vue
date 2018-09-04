@@ -1,15 +1,17 @@
 <template>
-    <Card>
+<div style="overflow:auto;width:95vw;background:#fff;" class="shawow-class">
+   <!--  <Card>
             <p slot="title">
                 <Icon type="person"></Icon>
                 代理安置结构
 
-            </p>
+            </p> -->
             <div style="overflow:hidden;padding:20px;width:600px;">
                <OrgChart :data="testData" v-on:onDrop="onDrop" @onClick="nodeClick"></OrgChart>
             </div>
               <Button type="primary" @click="back">返回最上层</Button>
-  </Card>
+  <!-- </Card> -->
+  </div>
 </template>
 
 <script>

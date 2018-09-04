@@ -2,35 +2,34 @@
 <template>
 	<Card>
             <p slot="title">
-                <Icon type="person"></Icon>
+               <!--  <Icon type="person"></Icon> -->
                 申请报单
             </p>
-            <div style="width:80vw">
+            <div style="width:87vw">
           
            
-		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="90">
                 <!-- {{formValidate.agentTypeId}} -->
 
-               <FormItem label="代理类型：" prop="agentTypeId">
-                    <Select v-model="formValidate.agentTypeId" placeholder="Select your city">
+               <FormItem label="货品类型：" prop="agentTypeId">
+                    <Select size="large" v-model="formValidate.agentTypeId" placeholder="Select your city">
                          <Option v-for="item in agentType" :value="item.id" :key="item.id">{{item.name}}({{item.remark}} )</Option>
-
                   
                     </Select>
                </FormItem>
 		        <FormItem label="用户姓名：" prop="receiverName">
-		            <Input v-model="formValidate.receiverName" placeholder="Enter your name"></Input>
+		            <Input size="large" v-model="formValidate.receiverName" placeholder="Enter your name"></Input>
 		        </FormItem>
                
                 <FormItem label="手机号码：" prop="receiverPhone">
-                    <Input v-model="formValidate.receiverPhone" placeholder="Enter your e-mail"></Input>
+                    <Input size="large" v-model="formValidate.receiverPhone" placeholder="Enter your e-mail"></Input>
                 </FormItem>
                 
                  <FormItem label="收货地址：" prop="receiverAddress">
-                    <Input v-model="formValidate.receiverAddress" placeholder="Enter your e-mail"></Input>
+                    <Input size="large" v-model="formValidate.receiverAddress" placeholder="Enter your e-mail"></Input>
                 </FormItem>
                 <FormItem label="验证码：" prop="identifyCode">
-                    <Input  v-model="identifyCodeInput" placeholder="验证码">
+                    <Input size="large" v-model="identifyCodeInput" placeholder="验证码">
                         <!-- <div  slot="prepend">验证码</div> -->
                    
                     <div @click="refreshCode" slot="append"  >
@@ -41,18 +40,20 @@
                      <div style="color:red">{{errorMessage}}</div>
                 </FormItem>
                  
-		        <FormItem>
-		            <Button type="primary"  :loading="loading" @click="handleSubmit('formValidate')">提交</Button>
-		           <!--  <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
-		        </FormItem>
+		       <!--  <FormItem>
+		           
+		            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+		        </FormItem> -->
 		    </Form>
+         <Button type="primary" long size="large" :loading="loading" @click="handleSubmit('formValidate')">提交</Button>
 		</div>
         
          <Modal
             v-model="modal6"
-            title="注册成功"
+            :closable='false'
+             :mask-closable='false'
             @on-ok="asyncOK">
-            <p>报单申请成功，请耐心等待处理</p>
+            <p style="font-size:14pt;">提交报单申请成功！请联系管理员并耐心等待处理。</p>
         </Modal>
 
 	</Card>

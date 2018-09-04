@@ -10,7 +10,7 @@
                 </Input>
               
         </div> -->
-        <Table border :columns="columns7" :data="data6"></Table>
+        <Table size="large" border :columns="columns7" :data="data6"></Table>
         <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page>
         <!-- {{pageData}} -->
           <Modal

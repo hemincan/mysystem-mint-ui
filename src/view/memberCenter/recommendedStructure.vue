@@ -1,7 +1,7 @@
 <template>
     <Card>
         <p slot="title">
-            <Icon type="person"></Icon>
+            <!-- <Icon type="person"></Icon> -->
             推荐结构
         </p>
          <div>
@@ -9,12 +9,12 @@
              <!-- <Tree :data="data2" show-checkbox></Tree> -->
         </div>
         <div>
-            <div style="padding:10px;">
+            <div style="padding:10px;font-size:12pt">
               总代理数：{{statisticsData.agentCount }}人，
               代理成功报单次数：{{statisticsData.applyGoodsCount }}次，
               代理总业绩：{{statisticsData.totalApplyMoney }}元
             </div>
-           <Table border :columns="columns7" :data="data6"></Table>
+           <Table border size="large" :columns="columns7" :data="data6"></Table>
             <!-- <Page :total="pageData.totalCount" size="small" show-elevator show-sizer @on-change="pageChange"></Page> -->
         </div>
     </Card>

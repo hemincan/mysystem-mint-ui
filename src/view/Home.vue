@@ -1,34 +1,39 @@
 <template>
 <div style="width:auto">
 	<div>
-		    <center> <Avatar shape="square" icon="person" size="large" />
-            <br>{{userForm.userName}}({{userForm.accountNumber}})
+      <div class="shawow-class" style="background:#fff;margin-bottom:10px;padding:20px;">
+		    <center>
+         <Avatar shape="square" icon="person" size="large"  />
+            <br>
+            <div style="font-size: 15pt;">{{userForm.userName}}({{userForm.accountNumber}})</div>
         </center>
+        </div>
         <!--  <card :header="{title: '登录信息'}" style="width:100%;">
               <div slot="content" class="card-demo-flex card-demo-content01">
                   您于：{{userForm.lastLoginTime}}登录 ，如不是你本人操作，请及时修改密码。
               </div>
           </card> -->
+          <div class="shawow-class">
          <card :header="{title: '基本信息'}" style="width:100%;">
-              <div slot="content" class="card-demo-flex card-demo-content01">
-                <div class="vux-1px-r">
+              <div slot="content" class="card-demo-flex card-demo-content01" >
+                <div class="vux-1px-r" style="font-size: 12pt;">
                   <span>{{userForm.balance}}元</span>
                   <br/>
                   帐户余额
                 </div>
-                 <div class="vux-1px-r">
+                 <div class="vux-1px-r" style="font-size: 12pt;">
                   <span>{{userForm.leftPerformance}}</span>
                   <br/>
                   左区绩效
                 </div>
 
-                 <div class="vux-1px-r">
+                 <div class="vux-1px-r" style="font-size: 12pt;">
                   <span>{{userForm.rightPerformance}}</span>
                   <br/>
                   右区绩效
                 </div>
 
-                 <div class="vux-1px-r">
+                 <div class="vux-1px-r" style="font-size: 12pt;">
                   <span>{{agentType.name}}</span>
                   <br/>
                   代理类型
@@ -37,14 +42,17 @@
               </div>
 
         </card>
-        <card :header="{title: '消息'}" style="width:100%;">
-
-            <div slot="content" class="card-demo-content01" style=" background: #fff;">
-                <div style="background: #f0f0f0;">
-                  
-                  
-                  <div v-for="item in message" class="message-item" @click="itemClick(item)" >
-                      <div style="font-weight:800" >系统消息&nbsp;&nbsp;
+        </div>
+       <!--  <card :header="{title: '消息'}" style="width:100%;">
+</card> -->
+            <div style="margin:5px;0px;5px;0px;font-size:12pt;font-weight:800;">
+                 消息
+            </div>
+            <div slot="content"  >
+                <div >
+                
+                  <div v-for="item in message" class="message-item shawow-class" @click="itemClick(item)" >
+                      <div style="font-weight:500;font-size:12pt;" >系统消息&nbsp;&nbsp;
                       <badge v-if="!item.readed" text="未读"></badge></div>
                       <div class="message-item-content">{{item.content}}</div>
                       <div class="message-item-time">{{item.receiveDate}}</div>
@@ -56,7 +64,7 @@
                     <div class="message-item-content">内容</div>
                 </div> -->
             </div>
-        </card>
+        
 	</div>
         
     </div>
@@ -126,6 +134,7 @@ import { Card,Badge } from 'vux'
 }
 .card-demo-content01 {
   padding: 10px 0;
+
  
 }
 .card-demo-flex > div {
@@ -137,10 +146,11 @@ import { Card,Badge } from 'vux'
   color: #f74c31;
 }
 .message-item{
-  padding: 5px 15px 5px 15px;
+  position: relative;
+  padding: 5px 25px 5px 15px;
   background: #fff;
-  margin-top:5px; 
-
+  margin-top:10px;
+  height: 130px; 
 
 }
 .message-item-content{
@@ -161,5 +171,9 @@ display:-webkit-box;
   }
 .message-item-time{
   font-size: 13px;
+  bottom: 0px;
+  left: 20px;
+  position: absolute;
 }
+
 </style>

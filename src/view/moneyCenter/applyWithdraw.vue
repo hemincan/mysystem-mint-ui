@@ -2,21 +2,21 @@
 <template>
 	<Card>
             <p slot="title">
-                <Icon type="person"></Icon>
+                <!-- <Icon type="person"></Icon> -->
                 申请提现
             </p>
-            <div style="width:80vw">
+            <div style="width:87vw">
           
            
-		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+		    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="90">
               
 		        <FormItem label="提现金额：" prop="withdrawMoney">
-		            <Input v-model="formValidate.withdrawMoney" placeholder="Enter your name"></Input>
+		            <Input size="large" v-model="formValidate.withdrawMoney" placeholder="Enter your name"></Input>
                 <div>可提现的余额为：{{userData.balance}}元</div>
 		        </FormItem>
                
                 <FormItem label="银行名：" prop="bankName">
-                    <Input v-model="formValidate.bankName" placeholder="请输入银行卡帐号的银行名"></Input>
+                    <Input size="large" v-model="formValidate.bankName" placeholder="请输入银行卡帐号的银行名"></Input>
                 </FormItem>
                 
                 <!--  <FormItem label="银行地址：" prop="bankAddress">
@@ -24,13 +24,13 @@
                 </FormItem> -->
 
                  <FormItem label="银行卡号：" prop="bankCard">
-                    <Input v-model="formValidate.bankCard" placeholder="请输入银行卡号"></Input>
+                    <Input size="large"  v-model="formValidate.bankCard" placeholder="请输入银行卡号"></Input>
                 </FormItem>
                     <FormItem label="户名：" prop="bankUserName">
-                    <Input v-model="formValidate.bankUserName" placeholder="银行卡户名"></Input>
+                    <Input size="large" v-model="formValidate.bankUserName" placeholder="银行卡户名"></Input>
                 </FormItem>
                 <FormItem label="验证码：" prop="identifyCode">
-                    <Input  v-model="identifyCodeInput" placeholder="验证码">
+                    <Input size="large" v-model="identifyCodeInput" placeholder="验证码">
                         <!-- <div  slot="prepend">验证码</div> -->
                    
                     <div @click="refreshCode" slot="append"  >
@@ -40,11 +40,12 @@
                      </Input>
                      <div style="color:red">{{errorMessage}}</div>
                 </FormItem>
-		        <FormItem>
-		            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-		            <!-- <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
-		        </FormItem>
+		       <!--  <FormItem>
+		           
+		            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+		        </FormItem> -->
 		    </Form>
+         <Button long type="primary" size="large" @click="handleSubmit('formValidate')">提交</Button>
 		</div>
         
          <Modal
@@ -56,14 +57,20 @@
         </Modal>
         <Modal
           v-model="confimInfo"
+             :closable='false'
+             :mask-closable='false'
           title="确认你的信息"
           :loading="confimInfoLoading"
           @on-ok="confimInfoAsyncOK">
-          <p style="color:red;font-size:15pt;">请确认你的信息无误，这将影响到你的金钱能否成功转入你的银行帐户中</p>
-          <div>提现金额：{{formValidate.withdrawMoney}}</div>
-          <div>银行名： {{formValidate.bankName}}</div>
-          <div>银行卡号： {{formValidate.bankCard}}</div>
-          <div>银行户名： {{formValidate.bankUserName}}</div>
+          <div style="font-size:15pt;">
+            
+        
+              <p style="color:red;font-size:15pt;">请确认你的信息无误，这将影响到你的金钱能否成功转入你的银行帐户中</p>
+              <div>提现金额：{{formValidate.withdrawMoney}}</div>
+              <div>银行名： {{formValidate.bankName}}</div>
+              <div>银行卡号： {{formValidate.bankCard}}</div>
+              <div>银行户名： {{formValidate.bankUserName}}</div>
+            </div>
       </Modal>
 	</Card>
 </template>

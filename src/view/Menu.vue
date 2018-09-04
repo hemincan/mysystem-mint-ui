@@ -1,18 +1,20 @@
 <template>
-<div style="width:200px">
+<div style="width:220px;">
         <div style="padding-top:0px;height:100px;font-size:23px;color:#fff;width:100%;font-weight:900;background:#2d8cf0">
-           <div style="position: absolute;left:16%;top:25px;"> 会员拓展系统 </div>
-           <img width="100%" src="../assets/bg.jpg">
+           <div style="position: absolute;left:16%;top:25px;"></div>
+           <img width="100%" src="../assets/logo.jpg">
         </div>
-         <Menu theme="dark" width="auto" :open-names="['1']" accordion @on-select="menuClick">
-         <Submenu v-for="(item,index) in menuData" :name="index" :key="index">
-             <template slot="title">
-              <Icon style="width:15px" :type="item.icon"></Icon>
-                {{item.name}}
+         <Menu  theme="dark" width="auto" :open-names="['1']" accordion @on-select="menuClick">
+         <Submenu v-for="(item,index) in menuData" :name="index" :key="index"  style="font-size: 13pt;margin-top:5px;font-weight:500;">
+             <template slot="title" >
+             <span>
+                  <Icon style="width:20px" :type="item.icon"></Icon>
+                    {{item.name}}
+             </span>
             </template>
               <router-link   v-for="(c,index2) in item.children"  :key="index2" :to="c.path">
-                     <MenuItem    :name="index + '-' + index2">
-                            <Icon v-if="c.icon!=null" style="width:15px" :type="c.icon"></Icon>{{c.name}}</MenuItem>
+                     <MenuItem   style="font-size: 13pt;margin-top:5px;font-weight:500;"  :name="index + '-' + index2">
+                            <Icon v-if="c.icon!=null" style="width:20px" :type="c.icon"></Icon>{{c.name}}</MenuItem>
             </router-link>
          </Submenu>
 
@@ -196,3 +198,14 @@
         }
     }
 </script>
+<style>
+    .ivu-menu-dark {
+        
+    }
+    .ivu-menu-opened{
+
+    }
+    .ivu-menu-submenu-title{
+
+    }
+</style>

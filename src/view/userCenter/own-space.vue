@@ -9,11 +9,11 @@
                 <Icon type="person"></Icon>
                 个人信息
             </p>
-            <div style="width:80vw">
+            <div style="width:87vw">
                 <Form 
                     ref="userForm"
                     :model="userForm" 
-          
+                    :label-width="90"
                     label-position="right"
                     :rules="inforValidate"
                 >
@@ -57,39 +57,39 @@
                         <span>{{ userForm.identityCard }}</span>
                     </FormItem>
                     <FormItem label="手机：" prop="phone">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.phone" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.phone" ></Input>
                         </div>
                     </FormItem>
                      <FormItem label="邮箱：" prop="email">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.email" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.email" ></Input>
                         </div>
                     </FormItem>
                     <FormItem label="QQ：" prop="qqNumber">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.qqNumber" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.qqNumber" ></Input>
                         </div>
                     </FormItem>
                    <FormItem label="地址：" prop="address">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.address" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.address" ></Input>
                         </div>
                     </FormItem>
                     
                      <FormItem label="银行卡号：" prop="bankCard">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.bankCard" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.bankCard" ></Input>
                         </div>
                     </FormItem>
                      <FormItem label="开户银行：" prop="bankName">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.bankName" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.bankName" ></Input>
                         </div>
                     </FormItem>
                      <FormItem label="开户银行地址：" prop="bankAddress">
-                        <div style="display:inline-block;width:300px;">
-                            <Input v-model="userForm.bankAddress" ></Input>
+                        <div style="display:inline-block;width:100%;">
+                            <Input size="large" v-model="userForm.bankAddress" ></Input>
                         </div>
                     </FormItem>
                      <FormItem label="推荐人帐号：">
@@ -104,22 +104,23 @@
                     </FormItem>
                     <div>
                         <!-- <Button type="text" style="width: 100px;" @click="cancelEditUserInfor">取消</Button> -->
-                        <Button type="primary" style="width: 100px;" :loading="save_loading" @click="saveEdit">保存</Button>
+                        <!-- <Button type="primary" style="width: 100px;" :loading="save_loading" @click="saveEdit">保存</Button> -->
                     </div>
                 </Form>
+                 <Button type="primary" long size="large"  :loading="save_loading" @click="saveEdit">保存</Button>
             </div>
         </Card>
         <Modal v-model="editPasswordModal" :closable='false' :mask-closable=false :width="500">
             <h3 slot="header" style="color:#2D8CF0">修改密码</h3>
             <Form ref="editPasswordForm" :model="editPasswordForm" :label-width="100" label-position="right" :rules="passwordValidate">
                 <FormItem label="原密码" prop="oldPass" :error="oldPassError">
-                    <Input v-model="editPasswordForm.oldPass" placeholder="请输入现在使用的密码" ></Input>
+                    <Input size="large"  v-model="editPasswordForm.oldPass" placeholder="请输入现在使用的密码" ></Input>
                 </FormItem>
                 <FormItem label="新密码" prop="newPass">
-                    <Input v-model="editPasswordForm.newPass" placeholder="请输入新密码，至少6位字符" ></Input>
+                    <Input size="large" v-model="editPasswordForm.newPass" placeholder="请输入新密码，至少6位字符" ></Input>
                 </FormItem>
                 <FormItem label="确认新密码" prop="rePass">
-                    <Input v-model="editPasswordForm.rePass" placeholder="请再次输入新密码" ></Input>
+                    <Input size="large" v-model="editPasswordForm.rePass" placeholder="请再次输入新密码" ></Input>
                 </FormItem>
             </Form>
             <div style="color:red">{{passwordErrorMessage}}</div>
